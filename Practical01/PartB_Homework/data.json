@@ -1,0 +1,6 @@
+{
+  "name": "Alex",
+  "food": "Tom Yum",
+  "hobbies": ["coding", "reading", "cycling"],
+  "intro": "Hi, I'm Alex, a Year 2 student passionate about building APIs!"
+}

@@ -1,0 +1,43 @@
+Write a short report in the file that addresses the following points:
+
+In your foods-api API, describe the role of the following elements:
+app.use(express.json())
+req.body
+req.query
+req.params.id
+
+Describe the significance of using different HTTP methods (e.g., GET, POST, PUT, DELETE) in your API. 
+How do they relate to CRUD operations?
+Explain the meaning of these HTTP status codes:
+200 OK
+201 Created
+400 Bad Request
+404 Not Found
+500 Internal Server Error
+
+app.use(express.json()) is an Express.js middleware used to parse incoming json objects from 
+requests into javascript objects. 
+req.body contains the data from the request body of POST or PUT requests, which is used 
+to create new food items or update existing food items.
+req.query contains the data from the URL query string of the request, which is used to 
+filter the foods by name and subsequently all their data. 
+req.params.id contains the dynamic route parameter values from the url, which is used to 
+update or delete food items through PUT or Delete requests by their food ID.
+
+HTTP Methods is what defines the type of action the client wants to perform, with each 
+HTTP method corresponding to a CRUD operation. 
+The CRUD operation "Create" represents the POST HTTP Method, and is used in the app.js to 
+create food items to be stored in the foods array. 
+The CRUD operation "Read" represents the GET HTTP Method, and is used in the app.js to 
+retrieve food items stored in the foods array. 
+The CRUD operation "Update" represents the PUT HTTP Method, and is used in the app.js to 
+update a food item stored in the foods array by its ID. 
+The CRUD operation "Delete" represents the DELETE HTTP Method, and is used in the app.js 
+to delete a food item stored in the foods array by its ID. 
+
+200 - HTTP request's response was successful.
+201 - The HTTP request was fulfilled and the server successfully created a new resource.
+400 - Server unable to return a valid response due to a client side error.
+404 - Server cannot find the resource requested by the client, or sometimes by website 
+misconfiguration.
+500 - Server encountered an unexpected error and hence cannot fulfill the request. 

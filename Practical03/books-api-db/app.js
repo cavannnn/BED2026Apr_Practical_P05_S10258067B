@@ -136,7 +136,7 @@ app.post("/books", async (req, res) => {
 // Acitvity B
 
 // Update 
-app.put("/books/:id", (req, res) => {
+app.put("/books/:id", async (req, res) => {
   const bookId = Number(req.params.id)
   const {title, author} = req.body;
   

@@ -132,3 +132,117 @@ app.post("/books", async (req, res) => {
     }
   }
 });
+
+// Acitvity B
+
+// Update 
+app.put("/books/:id", (req, res) => {
+  const bookId = Number(req.params.id)
+  const {title, author} = req.body;
+  
+  if (!title || !author) {
+    return res.status(400).json({message: `Cannot update: Book Title and Author required.`})
+  }
+
+  let connection;
+
+  try {
+    connection = await sql.connect(dbConfig);
+
+    // Check if book exists
+    const checkQuery = `SELECT id, title, author FROM Books WHERE id = @id`;
+    const checkRequest = connection.request();
+    checkRequest.input("id", bookId);
+
+    const checkResult = await checkRequest.query(checkQuery);
+
+    if (!checkResult.recordset[0]) {
+      return res.status(404).json({
+        message: `No book found with id ${bookId}.`,
+      });
+    }
+
+    // Update the book
+    const updateQuery = `UPDATE Books SET title = @title, author = @author WHERE id = @id`;
+
+    const updateRequest = connection.request();
+    updateRequest.input("id", bookId);
+    updateRequest.input("title", title);
+    updateRequest.input("author", author);
+
+    await updateRequest.query(updateQuery);
+
+    // Fetch updated book
+    const getUpdatedBookQuery = `SELECT id, title, author FROM Books WHERE id = @id`;
+
+    const getUpdatedBookRequest = connection.request();
+    getUpdatedBookRequest.input("id", bookId);
+
+    const updatedBookResult = await getUpdatedBookRequest.query(getUpdatedBookQuery);
+
+    res.json(updatedBookResult.recordset[0]);
+
+  } catch (error) {
+    console.error(`Error in PUT /books/${bookId}:`, error);
+    res.status(500).send("Error updating book");
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (closeError) {
+        console.error("Error closing database connection:", closeError);
+      }
+    }
+  }
+
+});
+
+
+// Delete 
+app.delete("/books/:id", async (req, res) => {
+  const bookId = Number(req.params.id);
+
+  let connection;
+
+  try {
+    connection = await sql.connect(dbConfig);
+
+    // Check if book exists
+    const checkQuery = `SELECT id, title, author FROM Books WHERE id = @id`;
+
+    const checkRequest = connection.request();
+    checkRequest.input("id", bookId);
+
+    const checkResult = await checkRequest.query(checkQuery);
+
+    if (!checkResult.recordset[0]) {
+      return res.status(404).json({
+        message: `No book found with id ${bookId}.`,
+      });
+    }
+
+    // Delete the book
+    const deleteQuery = `DELETE FROM Books WHERE id = @id`;
+
+    const deleteRequest = connection.request();
+    deleteRequest.input("id", bookId);
+
+    await deleteRequest.query(deleteQuery);
+
+    // Successfully deleted
+    res.status(204).send();
+
+  } catch (error) {
+    console.error(`Error in DELETE /books/${bookId}:`, error);
+    res.status(500).send("Error deleting book");
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (closeError) {
+        console.error("Error closing database connection:", closeError);
+      }
+    }
+  }
+
+});

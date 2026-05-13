@@ -230,7 +230,7 @@ app.delete("/books/:id", async (req, res) => {
     await deleteRequest.query(deleteQuery);
 
     // Successfully deleted
-    res.status(204).send();
+    res.status(204).send("Successfully deleted book.");
 
   } catch (error) {
     console.error(`Error in DELETE /books/${bookId}:`, error);

@@ -1,0 +1,19 @@
+1. What were the main changes you made to refactor the code into MVC architecture?
+
+The main change was separating the application into different layers based on their responsibilities. Database operations were moved into the Model, request and response handling were moved into the Controller, and validation logic was placed in Middleware. As a result, the app.js file became much cleaner and was mainly responsible for configuring the application and defining routes.
+
+2. What challenges did you face during the refactoring process?
+
+One challenge was ensuring that all files were correctly connected through imports and exports after splitting the application into multiple folders. I also encountered issues with environment variables not being loaded correctly, which caused database configuration errors. Debugging these issues required checking file paths, module exports, and application configuration.
+
+3. How does the MVC structure change the way you think about adding new features or modifying existing ones?
+   
+The MVC structure encourages a more structured approach when developing new features. Instead of placing all logic in a single file, I now think about where each responsibility belongs, such as database operations in the Model and request handling in the Controller. This makes it easier to add or modify features without affecting unrelated parts of the application.
+
+4. In what specific ways is the MVC version more organized or easier to understand and maintain?
+
+The MVC version is more organized because related functionality is grouped together. Database queries, request handling, and validation logic are stored in separate files, making the code easier to navigate and understand. This also simplifies maintenance as changes can be made in the relevant file without searching through a large application file.
+
+5. Explain how separating concerns makes the code better from a development perspective.
+
+Separating concerns improves readability, maintainability, and scalability. Each component has a clear responsibility, making the code easier to debug and update. It also reduces duplication and allows developers to work on different parts of the application independently.

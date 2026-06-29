@@ -36,11 +36,12 @@ app.delete("/books/:id", validateBookId, bookController.deleteBook);
 // Routes for users 
 app.post("/users", userController.createUser);
 app.get("/users", userController.getAllUsers);
+app.get("/users/search", userController.searchUsers);
+app.get("/users/with-books", userController.getUsersWithBooks);
 app.get("/users/:id", userController.getUserById);
 app.put("/users/:id", userController.updateUser);
 app.delete("/users/:id", userController.deleteUser);
-app.get("/users/search", userController.searchUsers);
-app.get("/users/with-books", userController.getUsersWithBooks);
+
 
 // Start server
 app.listen(port, () => {

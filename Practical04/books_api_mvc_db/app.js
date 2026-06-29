@@ -6,6 +6,7 @@ const path = require("path");
 dotenv.config();
 
 const bookController = require("./controllers/bookController");
+const userController = require("./controllers/userController");
 const {
   validateBook,
   validateBookId,
@@ -26,12 +27,20 @@ app.use(express.urlencoded({ extended: true })); // Ensure extended is true for 
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes for books
-// Apply middleware *before* the controller function for routes that need it
 app.get("/books", bookController.getAllBooks);
 app.get("/books/:id", validateBookId, bookController.getBookById); // Use validateBookId middleware
 app.post("/books", validateBook, bookController.createBook); // Use validateBook middleware
 app.put("/books/:id", validateBookId, validateBook, bookController.updateBook);
 app.delete("/books/:id", validateBookId, bookController.deleteBook);
+
+// Routes for users 
+app.post("/users", userController.createUser);
+app.get("/users", userController.getAllUsers);
+app.get("/users/:id", userController.getUserById);
+app.put("/users/:id", userController.updateUser);
+app.delete("/users/:id", userController.deleteUser);
+app.get("/users/search", userController.searchUsers);
+app.get("/users/with-books", userController.getUsersWithBooks);
 
 // Start server
 app.listen(port, () => {
